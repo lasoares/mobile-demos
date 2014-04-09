@@ -1,4 +1,6 @@
-﻿using Microsoft.WindowsAzure.MobileServices;
+﻿#define OFFLINE
+
+using Microsoft.WindowsAzure.MobileServices;
 using System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -56,8 +58,13 @@ namespace ThePhoneCompany
         private MobileServiceCollection<Job, Job> jobs;
         private MobileServiceCollection<Customer, Customer> customers;
 
+#if OFFLINE
         private IMobileServiceSyncTable<Job> jobsTable            = App.MobileService.GetSyncTable<Job>();
         private IMobileServiceSyncTable<Customer> customersTable  = App.MobileService.GetSyncTable<Customer>();
+#else
+        private IMobileServiceTable<Job> jobsTable            = App.MobileService.GetTable<Job>();
+        private IMobileServiceTable<Customer> customersTable  = App.MobileService.GetTable<Customer>();
+#endif
 
         public MainPage()
         {
@@ -66,7 +73,7 @@ namespace ThePhoneCompany
 
         private async Task Initialize()
         {
-
+#if OFFLINE
             if (!App.MobileService.SyncContext.IsInitialized) {
                 var store = new MobileServiceSQLiteStore(App.LOCAL_DB_NAME);
                 store.DefineTable<Job>();
@@ -74,6 +81,9 @@ namespace ThePhoneCompany
 
                 await App.MobileService.SyncContext.InitializeAsync(store, new SyncHandler());
             }
+#else
+            ButtonSync.IsEnabled = false;
+#endif
 
             await RefreshJobList();
         }
@@ -81,6 +91,7 @@ namespace ThePhoneCompany
 
         private async void ButtonSync_Click(object sender, RoutedEventArgs e)
         {
+#if OFFLINE
             string errorString = null;
             ButtonSync.IsEnabled = false;
 
@@ -103,6 +114,7 @@ namespace ThePhoneCompany
 
             await RefreshJobList();
             ButtonSync.IsEnabled = true;
+#endif
         }
 
 
