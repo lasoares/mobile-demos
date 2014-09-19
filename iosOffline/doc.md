@@ -18,9 +18,9 @@ The offline sync feature of Mobile Services is currently in beta and available t
 
 1.  Open the application target, and in its "Build phases", under the "Link Binary With Libraries", add the CoreData.framework.
 
-![][3]
+    ![][3]
 
-1.  Add Core Data code to the header. Open QSAppDelegate.h and replace
+2.  Add Core Data code to the header. Open QSAppDelegate.h and replace
     with the following declarations:
 
         #import <UIKit/UIKit.h>  
@@ -40,7 +40,117 @@ The offline sync feature of Mobile Services is currently in beta and available t
         @end
 
 
-2. Open the implementation file QSAppDelegate.m and add the following codefor the core data stack methods. This is similar to the code youfrom the new application template in Xcode with the "Use Core Data" option, with the main difference that this code uses uses a private queue concurrency type when initializing the `NSManagedContextObject`.
+3. Open the implementation file QSAppDelegate.m and add the following codefor the core data stack methods. This is similar to the code youfrom the new application template in Xcode with the "Use Core Data" option, with the main difference that this code uses uses a private queue concurrency type when initializing the `NSManagedContextObject`.
+
+        #import "QSAppDelegate.h"
+
+        @implementation QSAppDelegate
+
+        @synthesize managedObjectContext = _managedObjectContext;
+        @synthesize managedObjectModel = _managedObjectModel;
+        @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+
+        - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+        {
+            return YES;
+        }
+
+        - (void)saveContext
+        {
+            NSError *error = nil;
+            NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+            if (managedObjectContext != nil) {
+                if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+                    // Replace this implementation with code to handle the error appropriately.
+                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                    abort();
+                }
+            }
+        }
+
+        #pragma mark - Core Data stack
+
+        // Returns the managed object context for the application.
+        // If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
+        - (NSManagedObjectContext *)managedObjectContext
+        {
+            if (_managedObjectContext != nil) {
+                return _managedObjectContext;
+            }
+
+            NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+            if (coordinator != nil) {
+                _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+                [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+            }
+            return _managedObjectContext;
+        }
+
+        // Returns the managed object model for the application.
+        // If the model doesn't already exist, it is created from the application's model.
+        - (NSManagedObjectModel *)managedObjectModel
+        {
+            if (_managedObjectModel != nil) {
+                return _managedObjectModel;
+            }
+            NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"QSTodoDataModel" withExtension:@"momd"];
+            _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+            return _managedObjectModel;
+        }
+
+        // Returns the persistent store coordinator for the application.
+        // If the coordinator doesn't already exist, it is created and the application's store added to it.
+        - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+        {
+            if (_persistentStoreCoordinator != nil) {
+                return _persistentStoreCoordinator;
+            }
+
+            NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"qstodoitem.sqlite"];
+
+            NSError *error = nil;
+            _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+            if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+                /*
+                 Replace this implementation with code to handle the error appropriately.
+
+                 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+
+                 Typical reasons for an error here include:
+                 * The persistent store is not accessible;
+                 * The schema for the persistent store is incompatible with current managed object model.
+                 Check the error message to determine what the actual problem was.
+
+                 If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
+
+                 If you encounter schema incompatibility errors during development, you can reduce their frequency by:
+                 * Simply deleting the existing store:
+                 [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
+
+                 * Performing automatic lightweight migration by passing the following dictionary as the options parameter:
+                 @{NSMigratePersistentStoresAutomaticallyOption:@YES, NSInferMappingModelAutomaticallyOption:@YES}
+
+                 Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
+
+                 */
+
+                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                abort();
+            }
+
+            return _persistentStoreCoordinator;
+        }
+
+        #pragma mark - Application's Documents directory
+
+        // Returns the URL to the application's Documents directory.
+        - (NSURL *)applicationDocumentsDirectory
+        {
+            return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+        }
+
+        @end
 
 At this point the application is (almost) ready to use Core Data, but it's not doing anything with it.
 
@@ -128,13 +238,13 @@ To make the app work offline, this section will walk through the following chang
         TodoItem table self.syncTable = [self.client
         syncTableWithName:@"TodoItem"];
 
-This code initializes the sync context of the client with a data source and with no sync delegate. For the purposes of this tutorial, we will ignore sync conflicts, which are covered in the next tutorial [Handling conflicts with offline data sync].
+    This code initializes the sync context of the client with a data source and with no sync delegate. For the purposes of this tutorial, we will ignore sync conflicts, which are covered in the next tutorial [Handling conflicts with offline data sync].
 
-1.  Add the declaration of the method `syncData` to QSTodoService.h:
+4.  Add the declaration of the method `syncData` to QSTodoService.h:
 
         -   (void)syncData:(QSCompletionBlock)completion;
 
-1.  Add the following definition of `syncData` to QSTodoService, which will update the sync table with remote changes:
+5.  Add the following definition of `syncData` to QSTodoService, which will update the sync table with remote changes:
 
         - (void)syncData:(QSCompletionBlock)completion
         {
@@ -151,7 +261,7 @@ This code initializes the sync context of the client with a data source and with
             }];
         }
 
-2.  Update the implementation of `refreshDataOnSuccess` to loads the data from the local table into the `items` property of the service:
+6.  Update the implementation of `refreshDataOnSuccess` to loads the data from the local table into the `items` property of the service:
 
         - (void) refreshDataOnSuccess:(QSCompletionBlock)completion
         {
@@ -162,7 +272,7 @@ This code initializes the sync context of the client with a data source and with
             [query readWithCompletion:^(NSArray *results, NSInteger totalCount, NSError *error) {
                 [self logErrorIfNotNil:error];
                 
-                items = [results mutableCopy];
+                self.items = [results mutableCopy];
                 
                 // Let the caller know that we finished
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -171,7 +281,7 @@ This code initializes the sync context of the client with a data source and with
             }];
         }
 
-3.  Replace the implementation of `addItem` wit the code below, which adds new Todo items into the sync table. The operation will then be *queued* and will not be sent to the remote service until the sync table explicitly pushes changes.
+7.  Replace the implementation of `addItem` with the code below, which adds new Todo items into the sync table. The operation will then be *queued* and will not be sent to the remote service until the sync table explicitly pushes changes.
 
         -(void)addItem:(NSDictionary *)item completion:(QSCompletionWithIndexBlock)completion
         {
@@ -190,7 +300,7 @@ This code initializes the sync context of the client with a data source and with
              }];
         }
 
-4.  Replace the implementation of `completeItem` with the code below.
+8.  Replace the implementation of `completeItem` with the code below.
 
          -(void)completeItem:(NSDictionary *)item completion:(QSCompletionWithIndexBlock)completion
         {
@@ -224,6 +334,28 @@ This code initializes the sync context of the client with a data source and with
         }
 
     Note that there is a minor API difference between `MSSyncTable` and `MSTable`: for `MSTable` update operations, the completion block returns the updated item, since a script (or controller action) in the server can modify the item being updated and the client should receive the modification. For local tables, the updated items are not modified, so the completion block doesn't have a parameter for that updated item.
+
+9. In QSTodoListViewController.m, change the implementation of `viewDidLoad`. Replace the call to `[self refresh]` at the end of the method with the following code:
+
+        // load the local data, but don't pull from server
+        [self.todoService refreshDataOnSuccess:^
+         {
+             [self.refreshControl endRefreshing];
+             [self.tableView reloadData];
+         }];
+
+10. In QSTodoListViewController, change the implementation of `refresh` to call `syncData` instead of `refreshDataOnSuccess`:
+
+        - (void) refresh
+        {
+            [self.refreshControl beginRefreshing];
+            [self.todoService syncData:^
+             {
+                  [self.refreshControl endRefreshing];
+                  [self.tableView reloadData];
+             }];
+        }
+
 
 ### Threading considerations
 
