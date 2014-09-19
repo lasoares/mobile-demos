@@ -15,6 +15,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QSTodoItemViewController.h"
 
 @interface QSTodoListViewController : UITableViewController
 

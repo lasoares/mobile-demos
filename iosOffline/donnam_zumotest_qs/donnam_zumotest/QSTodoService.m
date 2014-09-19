@@ -126,28 +126,61 @@
      }];
 }
 
--(void)completeItem:(NSDictionary *)item completion:(QSCompletionWithIndexBlock)completion
+//-(void)completeItem:(NSDictionary *)item completion:(QSCompletionWithIndexBlock)completion
+//{
+//    // Cast the public items property to the mutable type (it was created as mutable)
+//    NSMutableArray *mutableItems = (NSMutableArray *) items;
+//    
+//    // Set the item to be complete (we need a mutable copy)
+//    NSMutableDictionary *mutable = [item mutableCopy];
+//    [mutable setObject:@YES forKey:@"complete"];
+//    
+//    // Replace the original in the items array
+//    NSUInteger index = [items indexOfObjectIdenticalTo:item];
+//    [mutableItems replaceObjectAtIndex:index withObject:mutable];
+//    
+//    // Update the item in the TodoItem table and remove from the items array on completion
+//    [self.syncTable update:mutable completion:^(NSError *error) {
+//        
+//        [self logErrorIfNotNil:error];
+//        
+//        NSUInteger index = [items indexOfObjectIdenticalTo:mutable];
+//        if (index != NSNotFound)
+//        {
+//            [mutableItems removeObjectAtIndex:index];
+//        }
+//        
+//        // Let the caller know that we have finished
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            completion(index);
+//        });
+//    }];
+//}
+
+- (void)updateItem:(NSDictionary *)item atIndex:(NSInteger)index completion:(QSCompletionWithIndexBlock)completion
 {
     // Cast the public items property to the mutable type (it was created as mutable)
     NSMutableArray *mutableItems = (NSMutableArray *) items;
     
-    // Set the item to be complete (we need a mutable copy)
-    NSMutableDictionary *mutable = [item mutableCopy];
-    [mutable setObject:@YES forKey:@"complete"];
-    
     // Replace the original in the items array
-    NSUInteger index = [items indexOfObjectIdenticalTo:item];
-    [mutableItems replaceObjectAtIndex:index withObject:mutable];
+    [mutableItems replaceObjectAtIndex:index withObject:item];
     
     // Update the item in the TodoItem table and remove from the items array on completion
-    [self.syncTable update:mutable completion:^(NSError *error) {
-        
+    [self.syncTable update:item completion:^(NSError *error) {
         [self logErrorIfNotNil:error];
         
-        NSUInteger index = [items indexOfObjectIdenticalTo:mutable];
-        if (index != NSNotFound)
-        {
-            [mutableItems removeObjectAtIndex:index];
+        NSInteger index = -1;
+        if (!error) {
+            BOOL isComplete = [[item objectForKey:@"complete"] boolValue];
+            NSString *remoteId = [item objectForKey:@"id"];
+            index = [items indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                return [remoteId isEqualToString:[obj objectForKey:@"id"]];
+            }];
+            
+            if (index != NSNotFound && isComplete)
+            {
+                [mutableItems removeObjectAtIndex:index];
+            }
         }
         
         // Let the caller know that we have finished

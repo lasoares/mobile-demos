@@ -45,8 +45,10 @@ typedef void (^QSBusyUpdateBlock) (BOOL busy);
 - (void)addItem:(NSDictionary *)item
      completion:(QSCompletionWithIndexBlock)completion;
 
-- (void)completeItem:(NSDictionary *)item
-          completion:(QSCompletionWithIndexBlock)completion;
+//- (void)completeItem:(NSDictionary *)item
+//          completion:(QSCompletionWithIndexBlock)completion;
+
+- (void)updateItem:(NSDictionary *)item atIndex:(NSInteger)index completion:(QSCompletionWithIndexBlock)completion;
 
 - (void)handleRequest:(NSURLRequest *)request
                  next:(MSFilterNextBlock)next
