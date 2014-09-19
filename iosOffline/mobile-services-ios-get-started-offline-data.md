@@ -12,13 +12,11 @@ The offline sync feature of Mobile Services is currently in beta and available t
 
 3.  In your Xcode project, add the new Mobile Services framework to your project. Drag the WindowsAzureMobileServices.framework folder from the Finder into your project, and check the box **Copy items into destination group's folder (if needed)**.
 
-![][2]
-
 ## Add Core Data support
 
 1.  Open the application target, and in its **Build phases**, under the **Link Binary With Libraries**, add **CoreData.framework**.
 
-    ![][3]
+    ![][2]
 
 2.  Add Core Data code to the header. Open QSAppDelegate.h and replace
     with the following declarations:
@@ -160,13 +158,13 @@ The last thing we need to do to use the Core Data framework is to define the dat
 
 1.  In the project, select **New File**, and under the Core Data section, select **Data Model**.
 
-    ![][2]
+    ![][3]
 
 2.  Enter the name QSTodoDataModel and click Create.
 
 3.  Select the data model in the folder view, then add the entities required for the application, by selecting the **Add Entity** button in the bottom of the page.
 
-    ![][3]
+    ![][4]
 
 4.  Add three entities, named `TodoItem`, `MS_TableOperations` and `MS_TableOperationErrors` with attributes defined as below. The first table to store the items themselves; the last two are framework-specific tables required for the offline feature to work.
 
@@ -208,11 +206,11 @@ To make the app work offline, this section will walk through the following chang
 
 1.  In the implementation for the `QSTodoService` class, rename the private property `table` to `syncTable` and change its type to `MSSyncTable`:
     
-        [@property] (nonatomic, strong) MSSyncTable *syncTable;
+        @property (nonatomic, strong) MSSyncTable *syncTable;
 
 2.  In QSTodoService.m, add the line `#include "QSAppDelegate.h"`.
 
-3.  Ihe initializer for the `QSTodoService` class, remove the line that creates the MSTable object and replace it with the following:
+3.  In the initializer for the `QSTodoService` class, remove the line that creates the MSTable object and replace it with the following:
 
         QSAppDelegate *delegate = (QSAppDelegate* )[[UIApplication
         sharedApplication] delegate]; NSManagedObjectContext *context =
@@ -222,15 +220,15 @@ To make the app work offline, this section will walk through the following chang
         self.client.syncContext = [[MSSyncContext alloc]
         initWithDelegate:nil dataSource:store callback:nil];
 
-        // Create an MSSyncTable instance to allow us to work with the
-        TodoItem table self.syncTable = [self.client
+        // Create an MSSyncTable instance to allow us to work with the TodoItem table
+        self.syncTable = [self.client
         syncTableWithName:@"TodoItem"];
 
     This code initializes the sync context of the client with a data source and with no sync delegate. For the purposes of this tutorial, we will ignore sync conflicts, which are covered in the next tutorial [Handling conflicts with offline data sync].
 
 4.  Add the declaration of the method `syncData` to QSTodoService.h:
 
-        -   (void)syncData:(QSCompletionBlock)completion;
+        - (void)syncData:(QSCompletionBlock)completion;
 
 5.  Add the following definition of `syncData` to QSTodoService, which will update the sync table with remote changes:
 
@@ -249,7 +247,7 @@ To make the app work offline, this section will walk through the following chang
             }];
         }
 
-6.  Update the implementation of `refreshDataOnSuccess` to loads the data from the local table into the `items` property of the service:
+6.  Update the implementation of `refreshDataOnSuccess` to load the data from the local table into the `items` property of the service:
 
         - (void) refreshDataOnSuccess:(QSCompletionBlock)completion
         {
@@ -363,7 +361,7 @@ During the initialization of the sync context, the code did not pass a callback 
 
 3.  Log into the Microsoft Azure Management portal and look at the database for your mobile service. If your service uses the JavaScript backend for mobile services, you can browse the data from the **Data** tab of the mobile service. If you are using the .NET backend for your mobile service, you can click on the **Manage** button for your database in the SQL Azure Extension to execute a query against your table.
 
-Notice the data has not been synchronized between the database and the
+    Notice the data has not been synchronized between the database and the
 local store.
 
 4.  In the app, perform the refresh gesture by dragging from the top. This causes the app to call `syncData` and `refreshDataOnSuccess` and will update the list with items from the local store. The new items have now been saved to your Mobile Service.
