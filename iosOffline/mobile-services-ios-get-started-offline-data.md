@@ -380,10 +380,10 @@ The normal CRUD operations for mobile services work as if the app is still conne
 -   In this tutorial, you may have noticed that there are no calls to the push method, but yet new data was still sent to the server after a refresh gesture. What is happening is that *before a pull is executed, any pending operations are pushed to the server*. That is done to prevent conflicts: if an item is modified locally and in the service, we want to make sure that the service has the ability to reject the changes (thus the push) by returning a conflict response to the push request.
 
 
-[1]: images/remove-previous-framework.png
-[2]: images/add-core-data-framework.png
-[3]: images/add-core-data-model.png
-[4]: images/add-entity.png
+[1]: media/mobile-services-ios-get-started-offline-data/remove-previous-framework.png
+[2]: media/mobile-services-ios-get-started-offline-data/add-core-data-framework.png
+[3]: media/mobile-services-ios-get-started-offline-data/add-core-data-model.png
+[4]: media/mobile-services-ios-get-started-offline-data/add-entity.png
 
 [Mobile Services iOS SDK (beta)]: http://aka.ms/Gc6fex
 [Handling conflicts with offline data sync]: tbd
