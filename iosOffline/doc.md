@@ -160,53 +160,40 @@ The last thing we need to do to use the Core Data framework is to define the dat
 
 1.  In the project, select "New File", and under the Core Data section, select Data Model.
 
-![][2]
+    ![][2]
 
 2.  Enter the name QSTodoDataModel and click Create.
 
 3.  Select the data model in the folder view, then add the entities required for the application, by selecting the "Add Entity" button in the bottom of the page.
 
-![][3]
+    ![][3]
 
 4.  Add three entities, named `TodoItem`, `MS_TableOperations` and `MS_TableOperationErrors` with attributes defined as below. The first table to store the items themselves; the last two are framework-specific tables required for the offline feature to work.
 
 **TodoItem**
 
-+-----------------------+-----------------------+
-| Attribute             | Type                  |
-+-----------------------+-----------------------+
-| id                    | String                |
-+-----------------------+-----------------------+
-| complete              | Boolean               |
-+-----------------------+-----------------------+
-| text                  | String                |
-+-----------------------+-----------------------+
-| ms_version           | String                |
-+-----------------------+-----------------------+
+| Attribute  |  Type   |
+|----------- |  ------ |
+| id         | String  |
+| complete   | Boolean |
+| text       | String  |
+| ms_version | String  |
 
 **MS_TableOperations**
 
-+-----------------------+-----------------------+
-| Attribute             | Type                  |
-+-----------------------+-----------------------+
-| id                    | Integer 64            |
-+-----------------------+-----------------------+
-| properties            | Binary Data           |
-+-----------------------+-----------------------+
-| itemId                | String                |
-+-----------------------+-----------------------+
-| table                 | String                |
-+-----------------------+-----------------------+
+| Attribute  |    Type     |
+|----------- |   ------    |
+| id         | Integer 64  |
+| properties | Binary Data |
+| itemId     | String      |
+| table      | String      |
 
 **MS_TableOperationErrors**
 
-+-----------------------+-----------------------+
-| Attribute             | Type                  |
-+-----------------------+-----------------------+
-| id                    | String                |
-+-----------------------+-----------------------+
-| properties            | Binary Data           |
-+-----------------------+-----------------------+
+| Attribute  |    Type     |
+|----------- |   ------    |
+| id         | String      |
+| properties | Binary Data |
 
 5.  Save the model, and build the project to make sure that everything is fine.
 
@@ -220,6 +207,7 @@ To make the app work offline, this section will walk through the following chang
 -   The *synchronization context* in the `MSClient` (a new property) must be initialized with the data source that we choose (in our case, the Core Data-based store implementation). The context is responsible for tracking which items have been changed locally, and sending those to the server when a push operation is started.
 
 1.  In the implementation for the `QSTodoService` class, rename the private property `table` to `syncTable` and change its type to `MSSyncTable`:
+    
         [@property] (nonatomic, strong) MSSyncTable *syncTable;
 
 2.  In QSTodoService.m, add the line `#include "QSAppDelegate.h"`.
@@ -397,3 +385,5 @@ The normal CRUD operations for mobile services work as if the app is still conne
 [2]: images/007-AddCoreDataFramework.png
 [3]: images/008-AddCoreDataModel.png
 [4]: images/009-AddEntity.png
+
+[Handling conflicts with offline data sync]: tbd
