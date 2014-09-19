@@ -81,13 +81,10 @@
 
 - (void)syncData:(QSCompletionBlock)completion
 {
-    // Create a predicate that finds items where complete is false
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"complete == NO"];
+    MSQuery *query = [self.syncTable query];
     
-    MSQuery *query = [self.syncTable queryWithPredicate:predicate];
-    
-    // Pulls data from the remote server into the local table. We're only
-    // pulling the items which we want to display (complete == NO).
+    // Pulls data from the remote server into the local table.
+    // We're pulling all items and filtering in refreshDataOnSuccess
     [self.syncTable pullWithQuery:query completion:^(NSError *error) {
         [self logErrorIfNotNil:error];
         [self refreshDataOnSuccess:completion];
@@ -103,7 +100,7 @@
     [query readWithCompletion:^(NSArray *results, NSInteger totalCount, NSError *error) {
         [self logErrorIfNotNil:error];
         
-        items = [results mutableCopy];
+        self.items = [results mutableCopy];
         
         // Let the caller know that we finished
         dispatch_async(dispatch_get_main_queue(), ^{
