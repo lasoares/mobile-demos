@@ -4,7 +4,7 @@
 
 The offline sync feature of Mobile Services is currently in beta and available through a separate download. This section describes how to upgrade the SDK that you are using in the app.
 
-1.  Remove the existing framework `WindowsAzureMobileServices.framework` and select "Move to Trash" to really delete the files.
+1.  Remove the existing framework `WindowsAzureMobileServices.framework` and select **Move to Trash** to really delete the files.
 
 ![][1]
 
@@ -16,7 +16,7 @@ The offline sync feature of Mobile Services is currently in beta and available t
 
 ## Add Core Data support
 
-1.  Open the application target, and in its "Build phases", under the "Link Binary With Libraries", add the CoreData.framework.
+1.  Open the application target, and in its **Build phases**, under the **Link Binary With Libraries**, add **CoreData.framework**.
 
     ![][3]
 
@@ -40,7 +40,7 @@ The offline sync feature of Mobile Services is currently in beta and available t
         @end
 
 
-3. Open the implementation file QSAppDelegate.m and add the following codefor the core data stack methods. This is similar to the code youfrom the new application template in Xcode with the "Use Core Data" option, with the main difference that this code uses uses a private queue concurrency type when initializing the `NSManagedContextObject`.
+3. Open the implementation file QSAppDelegate.m and add the following codefor the core data stack methods. This is similar to the code youfrom the new application template in Xcode with the **Use Core Data** option, with the main difference that this code uses uses a private queue concurrency type when initializing the `NSManagedContextObject`.
 
         #import "QSAppDelegate.h"
 
@@ -156,44 +156,44 @@ At this point the application is (almost) ready to use Core Data, but it's not d
 
 ## Defining the model
 
-The last thing we need to do to use the Core Data framework is to define the data model which will be stored in the persistent store. If you're not familiar with Core Data you can think of it as a simplified "schema"of the local database. We need to define the tables used by the application, but we also need to define two tables which will be used by the Mobile Services framework itself: one table to track the items which need to be synchronized with the server and one table to record any errors which may happen during this synchronization.
+The last thing we need to do to use the Core Data framework is to define the data model which will be stored in the persistent store. If you're not familiar with Core Data you can think of it as a simplified "schema" of the local database. We need to define the tables used by the application, but we also need to define two tables which will be used by the Mobile Services framework itself: one table to track the items which need to be synchronized with the server and one table to record any errors which may happen during this synchronization.
 
-1.  In the project, select "New File", and under the Core Data section, select Data Model.
+1.  In the project, select **New File**, and under the Core Data section, select **Data Model**.
 
     ![][2]
 
 2.  Enter the name QSTodoDataModel and click Create.
 
-3.  Select the data model in the folder view, then add the entities required for the application, by selecting the "Add Entity" button in the bottom of the page.
+3.  Select the data model in the folder view, then add the entities required for the application, by selecting the **Add Entity** button in the bottom of the page.
 
     ![][3]
 
 4.  Add three entities, named `TodoItem`, `MS_TableOperations` and `MS_TableOperationErrors` with attributes defined as below. The first table to store the items themselves; the last two are framework-specific tables required for the offline feature to work.
 
-**TodoItem**
+    **TodoItem**
 
-| Attribute  |  Type   |
-|----------- |  ------ |
-| id         | String  |
-| complete   | Boolean |
-| text       | String  |
-| ms_version | String  |
+    | Attribute  |  Type   |
+    |----------- |  ------ |
+    | id         | String  |
+    | complete   | Boolean |
+    | text       | String  |
+    | ms_version | String  |
 
-**MS_TableOperations**
+    **MS_TableOperations**
 
-| Attribute  |    Type     |
-|----------- |   ------    |
-| id         | Integer 64  |
-| properties | Binary Data |
-| itemId     | String      |
-| table      | String      |
+    | Attribute  |    Type     |
+    |----------- |   ------    |
+    | id         | Integer 64  |
+    | properties | Binary Data |
+    | itemId     | String      |
+    | table      | String      |
 
-**MS_TableOperationErrors**
+    **MS_TableOperationErrors**
 
-| Attribute  |    Type     |
-|----------- |   ------    |
-| id         | String      |
-| properties | Binary Data |
+    | Attribute  |    Type     |
+    |----------- |   ------    |
+    | id         | String      |
+    | properties | Binary Data |
 
 5.  Save the model, and build the project to make sure that everything is fine.
 
@@ -203,7 +203,7 @@ Now we have finished setting up the application to work with Core Data, but the 
 
 To make the app work offline, this section will walk through the following changes:
 
--   Instead of using the regular `MSTable` class to access the mobile service, we'll use `MSSyncTable`. A sync table is basically a local table which "knows" how to push changes made locally to the "remote"table, and pull items from that table locally.
+-   Instead of using the regular `MSTable` class to access the mobile service, we'll use `MSSyncTable`. A sync table is basically a local table which knows how to push changes made locally to the remote table, and pull items from that table locally.
 -   The *synchronization context* in the `MSClient` (a new property) must be initialized with the data source that we choose (in our case, the Core Data-based store implementation). The context is responsible for tracking which items have been changed locally, and sending those to the server when a push operation is started.
 
 1.  In the implementation for the `QSTodoService` class, rename the private property `table` to `syncTable` and change its type to `MSSyncTable`:
@@ -377,7 +377,7 @@ The normal CRUD operations for mobile services work as if the app is still conne
 -   To bring data from the service into the local tables, we need to perform a *pull* operation. This is executed in the sync table, which allows pulling data on a per-table basis.
 -   Notice that we can (and often should) pull only a subset of the table so that we don't overload the client with information that it may not need.
 -   When the client performs some changes (inserts, deletes, updates) in the items locally, those changes are stored in the sync context to be sent to the server. A *push* operation sends the tracked changes to the remote server. You would call push in the sync context via the `pushWithCompletion:` method.
--   In this tutorial, you may have noticed that there are no calls to the push method, but yet new data was still sent to the server after a refresh gesture. What is happening is that **before a pull is executed, any pending operations are pushed to the server**. That is done to prevent conflicts: if an item is modified locally and in the service, we want to make sure that the service has the ability to reject the changes (thus the push) by returning a conflict response to the push request.
+-   In this tutorial, you may have noticed that there are no calls to the push method, but yet new data was still sent to the server after a refresh gesture. What is happening is that *before a pull is executed, any pending operations are pushed to the server*. That is done to prevent conflicts: if an item is modified locally and in the service, we want to make sure that the service has the ability to reject the changes (thus the push) by returning a conflict response to the push request.
 
 
 [1]: images/006-RemovePreviousVersionOfFramework.png
