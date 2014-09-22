@@ -1,0 +1,88 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinOffline.iOS", "iOS\XamarinOffline.iOS.csproj", "{5984458C-3E93-4E37-BA96-62421F3A2DEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinOffline.Android", "Android\XamarinOffline.Android.csproj", "{E250CE33-8026-4731-9058-DDCEF87495A0}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamarinOffline", "XamarinOffline\XamarinOffline.shproj", "{9892F411-FA9F-4945-90E9-FA68998162CF}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		XamarinOffline\XamarinOffline.projitems*{9892f411-fa9f-4945-90e9-fa68998162cf}*SharedItemsImports = 13
+		XamarinOffline\XamarinOffline.projitems*{e250ce33-8026-4731-9058-ddcef87495a0}*SharedItemsImports = 4
+		XamarinOffline\XamarinOffline.projitems*{5984458c-3e93-4e37-ba96-62421f3a2dec}*SharedItemsImports = 4
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		Ad-Hoc|iPhoneSimulator = Ad-Hoc|iPhoneSimulator
+		AppStore|Any CPU = AppStore|Any CPU
+		AppStore|iPhone = AppStore|iPhone
+		AppStore|iPhoneSimulator = AppStore|iPhoneSimulator
+		Debug|Any CPU = Debug|Any CPU
+		Debug|iPhone = Debug|iPhone
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|Any CPU = Release|Any CPU
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Ad-Hoc|Any CPU.ActiveCfg = Ad-Hoc|iPhoneSimulator
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Ad-Hoc|iPhoneSimulator
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Ad-Hoc|iPhoneSimulator.Build.0 = Ad-Hoc|iPhoneSimulator
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Ad-Hoc|iPhoneSimulator.Deploy.0 = Ad-Hoc|iPhoneSimulator
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.AppStore|Any CPU.ActiveCfg = AppStore|iPhoneSimulator
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.AppStore|iPhoneSimulator.ActiveCfg = AppStore|iPhoneSimulator
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.AppStore|iPhoneSimulator.Build.0 = AppStore|iPhoneSimulator
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.AppStore|iPhoneSimulator.Deploy.0 = AppStore|iPhoneSimulator
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Debug|iPhone.Build.0 = Debug|iPhone
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Release|Any CPU.Build.0 = Release|iPhoneSimulator
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Release|iPhone.ActiveCfg = Release|iPhone
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Release|iPhone.Build.0 = Release|iPhone
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{5984458C-3E93-4E37-BA96-62421F3A2DEC}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Ad-Hoc|Any CPU.ActiveCfg = Debug|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Ad-Hoc|Any CPU.Build.0 = Debug|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Ad-Hoc|Any CPU.Deploy.0 = Debug|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.AppStore|Any CPU.ActiveCfg = Debug|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.AppStore|Any CPU.Build.0 = Debug|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.AppStore|Any CPU.Deploy.0 = Debug|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.AppStore|iPhone.Build.0 = Release|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.AppStore|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Release|iPhone.Build.0 = Release|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{E250CE33-8026-4731-9058-DDCEF87495A0}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = iOS\XamarinOffline.iOS.csproj
+	EndGlobalSection
+EndGlobal
