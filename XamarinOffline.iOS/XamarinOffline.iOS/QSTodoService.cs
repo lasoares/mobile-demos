@@ -38,7 +38,7 @@ namespace XamarinOffline
 			string path = "localstore.db";
 			var store = new MobileServiceSQLiteStore(path);
 			store.DefineTable<TodoItem>();
-			await client.SyncContext.InitializeAsync(store, new ToDoSyncHandler());
+			await client.SyncContext.InitializeAsync(store, new SyncHandler(client));
 		}
 
 		public static QSTodoService DefaultService {

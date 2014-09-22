@@ -10,11 +10,22 @@ using Microsoft.WindowsAzure.MobileServices.SQLiteStore;
 
 namespace XamarinOffline
 {
-    class ToDoSyncHandler : MobileServiceSyncHandler
+    class SyncHandler : IMobileServiceSyncHandler
     {
+        MobileServiceClient client;
         const string LOCAL_VERSION = "Use local version";
         const string SERVER_VERSION = "Use server version";
 
+        public SyncHandler(MobileServiceClient client)
+        {
+            this.client = client;
+        }
+
+        public virtual Task OnPushCompleteAsync(MobileServicePushCompletionResult result)
+        {
+            return Task.FromResult(0);
+        }
+        
         public virtual async Task<JObject> ExecuteTableOperationAsync(IMobileServiceTableOperation operation)
         {
             MobileServiceInvalidOperationException error;
@@ -46,8 +57,8 @@ namespace XamarinOffline
                     {
                         serverValue = await operation.Table.LookupAsync(localItem.Id) as JObject;
                     }
-                    var serverItem = serverValue.ToObject<TodoItem>();
 
+                    var serverItem = serverValue.ToObject<TodoItem>();
 
                     if (serverItem.Complete == localItem.Complete &&
                         serverItem.Text == localItem.Text)
@@ -56,19 +67,8 @@ namespace XamarinOffline
                         return serverValue;
                     }
 
-                    var dialog = new UIAlertView("Conflict between local and server versions",
-                    "How do you want to resolve this conflict?\n\n" + "Local item: \n" + localItem +
-                    "\n\nServer item:\n" + serverValue.ToObject<TodoItem>(), null, "Cancel", LOCAL_VERSION, SERVER_VERSION);
+                    int command = await ShowConflictDialog(localItem, serverValue);
 
-                    var clickTask = new TaskCompletionSource<int>();
-                    dialog.Clicked += (sender, e) =>
-                    {
-                        clickTask.SetResult(e.ButtonIndex);
-                    };
-
-                    dialog.Show();
-
-                    int command = await clickTask.Task;
                     if (command == 1)
                     {
                         // Overwrite the server version and try the operation again by continuing the loop
@@ -93,5 +93,21 @@ namespace XamarinOffline
             return null;
         }
 
+        private async Task<int> ShowConflictDialog(TodoItem localItem, JObject serverValue)
+        {
+            var dialog = new UIAlertView("Conflict between local and server versions",
+                    "How do you want to resolve this conflict?\n\n" + "Local item: \n" + localItem +
+                    "\n\nServer item:\n" + serverValue.ToObject<TodoItem>(), null, "Cancel", LOCAL_VERSION, SERVER_VERSION);
+
+            var clickTask = new TaskCompletionSource<int>();
+            dialog.Clicked += (sender, e) =>
+            {
+                clickTask.SetResult(e.ButtonIndex);
+            };
+
+            dialog.Show();
+
+            return await clickTask.Task;
+        }
     }
 }

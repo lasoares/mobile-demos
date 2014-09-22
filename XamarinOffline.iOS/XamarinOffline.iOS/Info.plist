@@ -22,13 +22,13 @@
 	<key>UIMainStoryboardFile~ipad</key>
 	<string>MainStoryboard_iPad</string>
 	<key>MinimumOSVersion</key>
-	<string>7.0</string>
+	<string></string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>Icon.png</string>
-		<string>Icon@2x.png</string>
-		<string>Icon-72.png</string>
 		<string>Icon-72@2x.png</string>
+		<string>Icon-72.png</string>
+		<string>Icon@2x.png</string>
+		<string>Icon.png</string>
 		<string>Default.png</string>
 		<string>Default@2x.png</string>
 		<string>Default-568h@2x.png</string>
@@ -38,7 +38,7 @@
 		<string>Default-Portrait@2x.png</string>
 	</array>
 	<key>CFBundleDisplayName</key>
-	<string>donnam_zumotest</string>
+	<string>XamarinOffline</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.azure-mobile.donnam_zumotest</string>
 	<key>CFBundleVersion</key>
@@ -46,6 +46,8 @@
 	<key>NSMainNibFile</key>
 	<string></string>
 	<key>NSMainNibFile~ipad</key>
+	<string></string>
+	<key>CFBundleShortVersionString</key>
 	<string></string>
 </dict>
 </plist>

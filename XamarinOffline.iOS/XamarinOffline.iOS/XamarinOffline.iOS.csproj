@@ -10,7 +10,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>XamarinOffline</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>donnam_zumotest</AssemblyName>
+    <AssemblyName>XamarinOffline</AssemblyName>
     <NuGetPackageImportStamp>0d454f89</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
@@ -128,8 +128,8 @@
       <DependentUpon>QSTodoListViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="QSTodoService.cs" />
-    <Compile Include="ToDoItem.cs" />
-    <Compile Include="ToDoSyncHandler.cs" />
+    <Compile Include="TodoItem.cs" />
+    <Compile Include="TodoSyncHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainStoryboard_iPhone.storyboard" />
