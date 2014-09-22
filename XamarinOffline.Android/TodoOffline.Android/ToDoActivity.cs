@@ -64,7 +64,8 @@ namespace TodoOffline
                     applicationURL,
                     applicationKey, progressHandler);
 
-                string path = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "test.db");
+                string path = 
+                    Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "localstore.db");
                 
                 if (!File.Exists(path))
                 {
@@ -72,7 +73,7 @@ namespace TodoOffline
                 }
                 var store = new MobileServiceSQLiteStore(path);
                 store.DefineTable<ToDoItem>();
-                await client.SyncContext.InitializeAsync(store, new ConflictSyncHandler());
+                await client.SyncContext.InitializeAsync(store, new SyncHandler(this));
 
                 // Get the Mobile Service Table instance to use
                 toDoTable = client.GetSyncTable <ToDoItem> ();
@@ -107,54 +108,14 @@ namespace TodoOffline
             if (item.ItemId == Resource.Id.menu_refresh) {
                 OnRefreshItemsSelected ();
             }
-            else if (item.ItemId == Resource.Id.menu_pull)
-            {
-                OnPullItemSelected();
-            }
             return true;
-        }
-
-        async void OnPullItemSelected()
-        {
-            MobileServicePushFailedException error = null;
-
-            try
-            {
-                await this.toDoTable.PullAsync();
-            }
-            catch (MobileServicePushFailedException ex)
-            {
-                error = ex;    
-            }
-
-            if (error != null)
-            {
-                foreach (MobileServiceTableOperationError opError in error.PushResult.Errors)
-                {
-                    var builder = new AlertDialog.Builder(this);
-                    builder.SetMessage(opError.Item.ToString());
-                    builder.SetTitle("Push failed");
-                    builder.SetPositiveButton("Client wins", async (which, e) =>
-                    {
-                        opError.Item[MobileServiceSystemColumns.Version] = opError.Result[MobileServiceSystemColumns.Version];
-                        await toDoTable.UpdateAsync(opError.Item);
-                        OnRefreshItemsSelected();
-                    });
-                    builder.SetNegativeButton("Server wins", async (which, e) =>
-                    {
-                        await opError.CancelAndUpdateItemAsync(opError.Result);
-                        OnRefreshItemsSelected();
-                    });
-                    builder.Create().Show();
-                }
-            }
-             
-             OnRefreshItemsSelected();
         }
 
         // Called when the refresh menu opion is selected
         async void OnRefreshItemsSelected ()
         {
+            await client.SyncContext.PushAsync();
+            await toDoTable.PullAsync("todoItems", toDoTable.CreateQuery());
             await RefreshItemsFromTableAsync ();
         }
 
@@ -164,7 +125,9 @@ namespace TodoOffline
             try {
                 // Get the items that weren't marked as completed and add them in the
                 // adapter
-                var list = await toDoTable.OrderBy(t=>t.Text).ToListAsync ();
+                var list = await toDoTable
+                            .Where(item => item.Complete == false)
+                            .OrderBy(item => item.Text).ToListAsync ();
 
                 adapter.Clear ();
 
@@ -184,8 +147,9 @@ namespace TodoOffline
 
             // Set the item as completed and update it in the table
             try {
+                item.Complete = true;
                 await toDoTable.UpdateAsync (item);
-
+                adapter.Remove(item);
             } catch (Exception e) {
                 CreateAndShowDialog (e, "Error");
             }

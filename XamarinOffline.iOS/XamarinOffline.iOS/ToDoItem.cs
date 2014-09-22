@@ -4,7 +4,7 @@ using Microsoft.WindowsAzure.MobileServices;
 
 namespace XamarinOffline
 {
-    public class TodoItem
+    public class ToDoItem
     {
         public string Id { get; set; }
 

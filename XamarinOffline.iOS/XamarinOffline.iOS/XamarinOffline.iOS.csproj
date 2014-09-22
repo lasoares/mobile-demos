@@ -128,8 +128,8 @@
       <DependentUpon>QSTodoListViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="QSTodoService.cs" />
-    <Compile Include="TodoItem.cs" />
-    <Compile Include="TodoSyncHandler.cs" />
+    <Compile Include="ToDoItem.cs" />
+    <Compile Include="SyncHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainStoryboard_iPhone.storyboard" />

@@ -123,7 +123,7 @@ namespace XamarinOffline
             if (string.IsNullOrWhiteSpace (itemText.Text))
                 return;
 
-            var newItem = new TodoItem {
+            var newItem = new ToDoItem {
                 Text = itemText.Text, 
                 Complete = false
             };
@@ -158,8 +158,7 @@ namespace XamarinOffline
                 // the refresh control is available, let's add it
                 RefreshControl = new UIRefreshControl ();
                 RefreshControl.ValueChanged += async (sender, e) => {
-                    await todoService.PushAsync();
-                    await todoService.PullAsync();
+                    await todoService.SyncAsync();
                     await RefreshAsync ();
                 };
                 useRefreshControl = true;

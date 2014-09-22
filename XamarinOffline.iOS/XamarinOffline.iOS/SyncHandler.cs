@@ -51,14 +51,14 @@ namespace XamarinOffline
 
                 if (error != null)
                 {
-                    var localItem = operation.Item.ToObject<TodoItem>();
+                    var localItem = operation.Item.ToObject<ToDoItem>();
                     var serverValue = error.Value;
                     if (serverValue == null) // 409 doesn't return the server item
                     {
                         serverValue = await operation.Table.LookupAsync(localItem.Id) as JObject;
                     }
 
-                    var serverItem = serverValue.ToObject<TodoItem>();
+                    var serverItem = serverValue.ToObject<ToDoItem>();
 
                     if (serverItem.Complete == localItem.Complete &&
                         serverItem.Text == localItem.Text)
@@ -93,11 +93,11 @@ namespace XamarinOffline
             return null;
         }
 
-        private async Task<int> ShowConflictDialog(TodoItem localItem, JObject serverValue)
+        private async Task<int> ShowConflictDialog(ToDoItem localItem, JObject serverValue)
         {
             var dialog = new UIAlertView("Conflict between local and server versions",
                     "How do you want to resolve this conflict?\n\n" + "Local item: \n" + localItem +
-                    "\n\nServer item:\n" + serverValue.ToObject<TodoItem>(), null, "Cancel", LOCAL_VERSION, SERVER_VERSION);
+                    "\n\nServer item:\n" + serverValue.ToObject<ToDoItem>(), null, "Cancel", LOCAL_VERSION, SERVER_VERSION);
 
             var clickTask = new TaskCompletionSource<int>();
             dialog.Clicked += (sender, e) =>

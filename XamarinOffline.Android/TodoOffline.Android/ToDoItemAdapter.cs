@@ -31,20 +31,21 @@ namespace TodoOffline
 
                 checkBox = row.FindViewById <CheckBox> (Resource.Id.checkToDoItem);
 
-                checkBox.CheckedChange += async (sender, e) => {
+                checkBox.CheckedChange += async (sender, e) =>
+                {
                     var cbSender = sender as CheckBox;
-                    if (cbSender != null && cbSender.Tag is ToDoItemWrapper) {
-                        var item = (cbSender.Tag as ToDoItemWrapper).ToDoItem;
-                        item.Complete = cbSender.Checked;
+                    if (cbSender != null && cbSender.Tag is ToDoItemWrapper && cbSender.Checked)
+                    {
+                        cbSender.Enabled = false;
                         if (activity is ToDoActivity)
-                            await ((ToDoActivity)activity).CheckItem (item);
+                            await ((ToDoActivity)activity).CheckItem((cbSender.Tag as ToDoItemWrapper).ToDoItem);
                     }
                 };
             } else
                 checkBox = row.FindViewById <CheckBox> (Resource.Id.checkToDoItem);
 
             checkBox.Text = currentItem.Text;
-            checkBox.Checked = currentItem.Complete;
+            checkBox.Checked = false;
             checkBox.Enabled = true;
             checkBox.Tag = new ToDoItemWrapper (currentItem);
 
