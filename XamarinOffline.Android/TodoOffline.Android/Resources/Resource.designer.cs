@@ -75,9 +75,6 @@ namespace TodoOffline
 			// aapt resource value: 0x7f070002
 			public const int loadingProgressBar = 2131165186;
 			
-			// aapt resource value: 0x7f070008
-			public const int menu_pull = 2131165192;
-			
 			// aapt resource value: 0x7f070007
 			public const int menu_refresh = 2131165191;
 			

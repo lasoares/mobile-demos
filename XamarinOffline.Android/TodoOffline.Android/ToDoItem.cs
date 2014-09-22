@@ -16,6 +16,11 @@ namespace TodoOffline
 
         [Version]
         public string Version { get; set; }
+
+        public override string ToString()
+        {
+            return "Text: " + Text + "\nComplete: " + Complete + "\n";
+        }
     }
 
     public class ToDoItemWrapper : Java.Lang.Object

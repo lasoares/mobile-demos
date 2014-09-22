@@ -34,8 +34,8 @@ namespace TodoOffline
         //Progress spinner to use for table operations
         private ProgressBar progressBar;
 
-        const string applicationURL = @"https://nodetestapp.azure-mobile.net/";
-        const string applicationKey = @"uXNQnEHadBVMcbztfclTblLSjAUldy66";
+        const string applicationURL = @"https://donnam-zumotest.azure-mobile.net/";
+        const string applicationKey = @"TTyfjsYztzXcWnhOMCQgboGlLnCCJe65";
 
         protected override async void OnCreate (Bundle bundle)
         {
