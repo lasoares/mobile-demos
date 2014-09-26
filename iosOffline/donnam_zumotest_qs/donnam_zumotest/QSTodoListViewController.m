@@ -26,7 +26,6 @@
 
 // Private properties
 @property (strong, nonatomic) QSTodoService *todoService;
-@property (nonatomic)           BOOL            useRefreshControl;
 @property (nonatomic)           NSInteger       editedItemIndex;
 @property (strong, nonatomic)   NSMutableDictionary *editedItem;
 
@@ -60,9 +59,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated
-{
-    self.navigationController.navigationBar.hidden = YES;
-    
+{   
     if (self.editedItem && self.editedItemIndex >= 0) {
         // Returning from the details view controller
         NSDictionary *item = [self.todoService.items objectAtIndex:self.editedItemIndex];

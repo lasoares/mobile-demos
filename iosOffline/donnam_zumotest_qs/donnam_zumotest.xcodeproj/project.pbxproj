@@ -26,7 +26,8 @@
 		03D1006716ED41D20005A1A9 /* connected114.png in Resources */ = {isa = PBXBuildFile; fileRef = 03D1006316ED41D20005A1A9 /* connected114.png */; };
 		03D1006816ED41D20005A1A9 /* connected144.png in Resources */ = {isa = PBXBuildFile; fileRef = 03D1006416ED41D20005A1A9 /* connected144.png */; };
 		680B556419D4EEF900E6878F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 680B556319D4EEF900E6878F /* CoreData.framework */; };
-		680B556719D4EF1500E6878F /* QSTodoDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 680B556519D4EF1500E6878F /* QSTodoDataModel.xcdatamodeld */; };
+		68463A3319D4F19100308503 /* QSTodoDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 68463A2F19D4F19100308503 /* QSTodoDataModel.xcdatamodeld */; };
+		68463A3419D4F19100308503 /* QSTodoItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68463A3219D4F19100308503 /* QSTodoItemViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,7 +56,9 @@
 		03D1006316ED41D20005A1A9 /* connected114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connected114.png; sourceTree = "<group>"; };
 		03D1006416ED41D20005A1A9 /* connected144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connected144.png; sourceTree = "<group>"; };
 		680B556319D4EEF900E6878F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		680B556619D4EF1500E6878F /* QSTodoDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QSTodoDataModel.xcdatamodel; sourceTree = "<group>"; };
+		68463A3019D4F19100308503 /* QSTodoDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QSTodoDataModel.xcdatamodel; sourceTree = "<group>"; };
+		68463A3119D4F19100308503 /* QSTodoItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSTodoItemViewController.h; sourceTree = "<group>"; };
+		68463A3219D4F19100308503 /* QSTodoItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSTodoItemViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +80,7 @@
 		03D1001116EC579A0005A1A9 = {
 			isa = PBXGroup;
 			children = (
+				68463A2F19D4F19100308503 /* QSTodoDataModel.xcdatamodeld */,
 				03D1002316EC579A0005A1A9 /* donnam_zumotest */,
 				03D1001C16EC579A0005A1A9 /* Frameworks */,
 				03D1001B16EC579A0005A1A9 /* Products */,
@@ -106,6 +110,8 @@
 		03D1002316EC579A0005A1A9 /* donnam_zumotest */ = {
 			isa = PBXGroup;
 			children = (
+				68463A3119D4F19100308503 /* QSTodoItemViewController.h */,
+				68463A3219D4F19100308503 /* QSTodoItemViewController.m */,
 				03D1004816EC58490005A1A9 /* QSTodoService.h */,
 				03D1004916EC58490005A1A9 /* QSTodoService.m */,
 				03D1004516EC58300005A1A9 /* QSTodoListViewController.h */,
@@ -122,7 +128,6 @@
 		03D1002416EC579A0005A1A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				680B556519D4EF1500E6878F /* QSTodoDataModel.xcdatamodeld */,
 				03D1006116ED41D20005A1A9 /* connected57.png */,
 				03D1006216ED41D20005A1A9 /* connected72.png */,
 				03D1006316ED41D20005A1A9 /* connected114.png */,
@@ -211,8 +216,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				03D1002A16EC579A0005A1A9 /* main.m in Sources */,
-				680B556719D4EF1500E6878F /* QSTodoDataModel.xcdatamodeld in Sources */,
+				68463A3419D4F19100308503 /* QSTodoItemViewController.m in Sources */,
 				03D1002E16EC579A0005A1A9 /* QSAppDelegate.m in Sources */,
+				68463A3319D4F19100308503 /* QSTodoDataModel.xcdatamodeld in Sources */,
 				03D1004716EC58300005A1A9 /* QSTodoListViewController.m in Sources */,
 				03D1004A16EC58490005A1A9 /* QSTodoService.m in Sources */,
 			);
@@ -346,13 +352,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		680B556519D4EF1500E6878F /* QSTodoDataModel.xcdatamodeld */ = {
+		68463A2F19D4F19100308503 /* QSTodoDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				680B556619D4EF1500E6878F /* QSTodoDataModel.xcdatamodel */,
+				68463A3019D4F19100308503 /* QSTodoDataModel.xcdatamodel */,
 			);
-			currentVersion = 680B556619D4EF1500E6878F /* QSTodoDataModel.xcdatamodel */;
-			path = QSTodoDataModel.xcdatamodeld;
+			currentVersion = 68463A3019D4F19100308503 /* QSTodoDataModel.xcdatamodel */;
+			name = QSTodoDataModel.xcdatamodeld;
+			path = donnam_zumotest/QSTodoDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
