@@ -26,6 +26,7 @@
 		03D1006716ED41D20005A1A9 /* connected114.png in Resources */ = {isa = PBXBuildFile; fileRef = 03D1006316ED41D20005A1A9 /* connected114.png */; };
 		03D1006816ED41D20005A1A9 /* connected144.png in Resources */ = {isa = PBXBuildFile; fileRef = 03D1006416ED41D20005A1A9 /* connected144.png */; };
 		680B556419D4EEF900E6878F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 680B556319D4EEF900E6878F /* CoreData.framework */; };
+		681EB00519D622EC0045D344 /* QSUIAlertViewWithBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 681EB00419D622EC0045D344 /* QSUIAlertViewWithBlock.m */; };
 		68463A3319D4F19100308503 /* QSTodoDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 68463A2F19D4F19100308503 /* QSTodoDataModel.xcdatamodeld */; };
 		68463A3419D4F19100308503 /* QSTodoItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68463A3219D4F19100308503 /* QSTodoItemViewController.m */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,8 @@
 		03D1006316ED41D20005A1A9 /* connected114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connected114.png; sourceTree = "<group>"; };
 		03D1006416ED41D20005A1A9 /* connected144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connected144.png; sourceTree = "<group>"; };
 		680B556319D4EEF900E6878F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		681EB00319D622EC0045D344 /* QSUIAlertViewWithBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSUIAlertViewWithBlock.h; sourceTree = "<group>"; };
+		681EB00419D622EC0045D344 /* QSUIAlertViewWithBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSUIAlertViewWithBlock.m; sourceTree = "<group>"; };
 		68463A3019D4F19100308503 /* QSTodoDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QSTodoDataModel.xcdatamodel; sourceTree = "<group>"; };
 		68463A3119D4F19100308503 /* QSTodoItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSTodoItemViewController.h; sourceTree = "<group>"; };
 		68463A3219D4F19100308503 /* QSTodoItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSTodoItemViewController.m; sourceTree = "<group>"; };
@@ -110,6 +113,8 @@
 		03D1002316EC579A0005A1A9 /* donnam_zumotest */ = {
 			isa = PBXGroup;
 			children = (
+				681EB00319D622EC0045D344 /* QSUIAlertViewWithBlock.h */,
+				681EB00419D622EC0045D344 /* QSUIAlertViewWithBlock.m */,
 				68463A3119D4F19100308503 /* QSTodoItemViewController.h */,
 				68463A3219D4F19100308503 /* QSTodoItemViewController.m */,
 				03D1004816EC58490005A1A9 /* QSTodoService.h */,
@@ -221,6 +226,7 @@
 				68463A3319D4F19100308503 /* QSTodoDataModel.xcdatamodeld in Sources */,
 				03D1004716EC58300005A1A9 /* QSTodoListViewController.m in Sources */,
 				03D1004A16EC58490005A1A9 /* QSTodoService.m in Sources */,
+				681EB00519D622EC0045D344 /* QSUIAlertViewWithBlock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

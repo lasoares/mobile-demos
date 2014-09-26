@@ -17,6 +17,7 @@
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 #import "QSTodoListViewController.h"
 #import "QSTodoService.h"
+#import "QSUIAlertViewWithBlock.h"
 
 
 #pragma mark * Private Interface
@@ -103,7 +104,7 @@
     [super viewDidLoad];
     
     // Create the todoService - this creates the Mobile Service client inside the wrapped service
-    self.todoService = [QSTodoService defaultService];
+    self.todoService = [QSTodoService defaultServiceWithDelegate:self];
     
     // Set the busy method
     UIActivityIndicatorView *indicator = self.activityIndicator;
@@ -139,6 +140,50 @@
           [self.refreshControl endRefreshing];
           [self.tableView reloadData];
      }];
+}
+
+- (void)tableOperation:(MSTableOperation *)operation onComplete:(MSSyncItemBlock)completion
+{
+    [self doOperation:operation complete:completion];
+}
+
+- (void)doOperation:(MSTableOperation *)operation complete:(MSSyncItemBlock)completion
+{
+    [operation executeWithCompletion:^(NSDictionary *item, NSError *error) {
+        
+        NSDictionary *serverItem = [error.userInfo objectForKey:MSErrorServerItemKey];
+        
+        if (error.code == MSErrorPreconditionFailed) {
+            QSUIAlertViewWithBlock *alert = [[QSUIAlertViewWithBlock alloc] initWithCallback:^(NSInteger buttonIndex) {
+                if (buttonIndex == 1) { // Client
+                    NSMutableDictionary *adjustedItem = [operation.item mutableCopy];
+                    
+                    [adjustedItem setValue:[serverItem objectForKey:MSSystemColumnVersion] forKey:MSSystemColumnVersion];
+                    operation.item = adjustedItem;
+                    
+                    [self doOperation:operation complete:completion];
+                    return;
+                    
+                } else if (buttonIndex == 2) { // Server
+                    NSDictionary *serverItem = [error.userInfo objectForKey:MSErrorServerItemKey];
+                    completion(serverItem, nil);
+                } else { // Cancel
+                    [operation cancelPush];
+                    completion(nil, error);
+                }
+            }];
+            
+            NSString *message = [NSString stringWithFormat:@"Client value: %@\nServer value: %@", operation.item[@"text"], serverItem[@"text"]];
+
+            
+            [alert showAlertWithTitle:@"Server Conflict"
+                              message:message
+                    cancelButtonTitle:@"Cancel"
+                    otherButtonTitles:[NSArray arrayWithObjects:@"Use Client", @"Use Server", nil]];
+        } else {
+            completion(item, error);
+        }
+    }];
 }
 
 
