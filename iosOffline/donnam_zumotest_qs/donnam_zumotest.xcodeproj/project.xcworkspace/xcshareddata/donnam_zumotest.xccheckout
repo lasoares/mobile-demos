@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E5909A7B-1859-4BFB-BC60-EA8E8B8E2152</string>
+	<key>IDESourceControlProjectName</key>
+	<string>donnam_zumotest</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>ACEF4D3F-69F8-4BF1-8FA4-B1A34A2F2DA5</key>
+		<string>https://github.com/lindydonna/mobile-demos.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>iosOffline/donnam_zumotest_qs/donnam_zumotest/donnam_zumotest.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>ACEF4D3F-69F8-4BF1-8FA4-B1A34A2F2DA5</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/lindydonna/mobile-demos.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>ACEF4D3F-69F8-4BF1-8FA4-B1A34A2F2DA5</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>ACEF4D3F-69F8-4BF1-8FA4-B1A34A2F2DA5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>mobile-demos</string>
+		</dict>
+	</array>
+</dict>
+</plist>
