@@ -10,11 +10,11 @@ This tutorial walks through the changes for the iPhone storyboard only, but you 
 
 1. In Xcode, open the `MainStoryboard_iPhone.storyboard` file. Select the main view controller, and on the Editor menu, select **Embed In**, **Navigation Controller**.
 
-![Embedding main view controller in a navigation controller](media/mobile-services-ios-get-started-offline-data/main-controller-into-navigation.png)
+	![Embedding main view controller in a navigation controller](media/mobile-services-ios-get-started-offline-data/main-controller-into-navigation.png)
 
 2. Select the table view cell in the Todo List View Controller. In the Attribute inspector, set the Accessory mode to be **Disclosure Indicator**.
 
-![Add disclosure indicator to table cell](media/mobile-services-ios-get-started-offline-data/disclosure-indicator.png)
+	![Add disclosure indicator to table cell](media/mobile-services-ios-get-started-offline-data/disclosure-indicator.png)
 
 ### Adding the details view controller
 
@@ -97,7 +97,7 @@ This tutorial walks through the changes for the iPhone storyboard only, but you 
 
 5. In the identity inspector, select `QSTodoItemViewController` as the custom class for the view controller. 
 
-6. A new push segue from the master view controller to the detail view controller by control-dragging to the detail view controller. In the Attributes Inspector, set the segue identifier to `detailSegue`. 
+6. Add a new push segue from the master view controller to the detail view controller by control-dragging to the detail view controller. In the Attributes Inspector, set the segue identifier to `detailSegue`. 
 
 7. Add a Text Field and Segmented Control to the view controller. Set the title for Segment 0 to "Yes" and the title for Segment 1 to "No".
 
@@ -109,7 +109,7 @@ This tutorial walks through the changes for the iPhone storyboard only, but you 
 
 Now we need to pass the item from the master to the detail view, and update it once we're back. 
 
-1. Delete the following methods which are no longer needed:
+1. In `QSTodoListViewController.m`, remove the following methods which are no longer needed:
 
 		tableView:titleForDeleteConfirmationButtonForRowAtIndexPath:
 		tableView:editingStyleForRowAtIndexPath:
@@ -153,7 +153,7 @@ You should now be able to run the app and see the item displayed in the detail v
 
 ### Saving the edits
 
-When you click the "Back" button in the navigation view the edits are lost. The data is sent to the detail view but changes aren't being sent back to the master. Ideally we'd implement a delegate in the master view controller so that it can be notified when edits are done, but since we already passed a pointer to a copy of the item that is being edited, we can use that pointer to retrieve the list of updates made to the item and update it in the server.
+With the current implementation, when you select the **Back** button in the navigation view, the edits are lost. The data is sent to the detail view but changes aren't being sent back to the master. Ideally we'd implement a delegate in the master view controller so that it can be notified when edits are done, but since we already passed a pointer to a copy of the item that is being edited, we can use that pointer to retrieve the list of updates made to the item and update it in the server.
 
 1. In `QSTodoService.h`, remove the declaration of `completeItem` and add a declaration for `updateItem`:
 
@@ -194,7 +194,7 @@ When you click the "Back" button in the navigation view the edits are lost. The 
 		    }];
 		}
 
-3. In `QSTodoViewController.m`, add an implementation for the method `viewWillAppear`, that will call the update method if we are returning to the master view from the detail view:
+3. In `QSTodoViewController.m`, add the following implementation for the method `viewWillAppear`. This will call the update method if we are returning to the master view from the detail view:
 
 	    - (void)viewWillAppear:(BOOL)animated {
 	        if (self.editedItem && self.editedItemIndex >= 0) {
@@ -237,11 +237,9 @@ When you click the "Back" button in the navigation view the edits are lost. The 
 4. Run the app. You can now edit items in the detail view.
  
 
-## Add QSAlertView
+## Add a conflict handler
 
-## Update QSTodoService
-
-Well, offline handling of data is great, but what happens if there is a conflict when a push operation is being executed? To test this scenario you'll need a HTTP tool such as Fiddler or Postman to simulate changes from other devices (or two devices, or a device and the simulator - basically two different clients which can modify data).
+When working offline, there is a greater possibility for a conflict when a push operation is being executed. You can create such a conflict using an HTTP tool such as Fiddler or Postman to simulate changes from other clients.
 
 Suppose that in my list I have an item for "Buy eggs", but I'll edit it to "Buy eggs (6)":
 
@@ -290,13 +288,15 @@ So we have a local change which cannot be pushed, since it's conflicting with wh
 
 3. Rename the private constructor `init` to `initWithDelegate` and add a parameter for the delegate:
 
-	-(QSTodoService *)initWithDelegate:(id<MSSyncContextDelegate>)syncDelegate
+		-(QSTodoService *)initWithDelegate:(id<MSSyncContextDelegate>)syncDelegate
 
 4. In the implementation of `initWithDelegate`, change the initialization of the sync context to pass the delegate:
 
-	self.client.syncContext = [[MSSyncContext alloc] initWithDelegate:syncDelegate dataSource:store callback:nil];
+		self.client.syncContext = [[MSSyncContext alloc] initWithDelegate:syncDelegate dataSource:store callback:nil];
 
 ## Add a custom alert dialog
+
+If there's a conflict, the app will display a custom dialog that will ask if they want the client or the server version of the item. 
 
 1. Create a new class `QSUIAlertViewWithBlock`.
 
@@ -370,7 +370,7 @@ So we have a local change which cannot be pushed, since it's conflicting with wh
 
 		#import "QSUIAlertViewWithBlock.h"
 
-## Update QSListViewController
+## Update the user interface
 
 Now we will implement the UI changes for showing a conflict handling dialog to the user. If there is a server conflict, the dialog allows the user to choose which version of a todo item they want to keep: the client version (which will then overwrite the version on the server), the server version (whose value will remain unchanged, and the client version will be overwritten), or cancel the entire push operation, leaving the remaining push operations pending. 
 
@@ -378,12 +378,12 @@ During conflict handling, more conflicts can arise (for instance, server updates
 
 1. In `QSTodoListViewController.h`, change the interface declaration to implement the MSSyncContextDelegate protocol:
 
-	@interface QSTodoListViewController : UITableViewController <MSSyncContextDelegate>
+		@interface QSTodoListViewController : UITableViewController <MSSyncContextDelegate>
 
 2. In `QSTodoListViewController.m`, change the implementation of `viewDidLoad` to pass the self pointer to the delegate when initializing the todoService property:
 
-	// Create the todoService - this creates the Mobile Service client inside the wrapped service
-	self.todoService = [QSTodoService defaultServiceWithDelegate:self];
+		// Create the todoService - this creates the Mobile Service client inside the wrapped service
+		self.todoService = [QSTodoService defaultServiceWithDelegate:self];
 
 3. Implement the `tableOperation:onComplete:` method, which will be called for every item which is being sent (pushed) to the service. Here we will show the user a conflict handling dialog:
 
