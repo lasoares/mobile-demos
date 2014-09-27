@@ -294,7 +294,7 @@ So we have a local change which cannot be pushed, since it's conflicting with wh
 
 		self.client.syncContext = [[MSSyncContext alloc] initWithDelegate:syncDelegate dataSource:store callback:nil];
 
-## Add a custom alert dialog
+### Add a custom alert dialog
 
 If there's a conflict, the app will display a custom dialog that will ask if they want the client or the server version of the item. 
 
@@ -370,7 +370,7 @@ If there's a conflict, the app will display a custom dialog that will ask if the
 
 		#import "QSUIAlertViewWithBlock.h"
 
-## Update the user interface
+### Update the user interface
 
 Now we will implement the UI changes for showing a conflict handling dialog to the user. If there is a server conflict, the dialog allows the user to choose which version of a todo item they want to keep: the client version (which will then overwrite the version on the server), the server version (whose value will remain unchanged, and the client version will be overwritten), or cancel the entire push operation, leaving the remaining push operations pending. 
 
