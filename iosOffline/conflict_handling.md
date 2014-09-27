@@ -10,11 +10,11 @@ This tutorial walks through the changes for the iPhone storyboard only, but you 
 
 1. In Xcode, open the `MainStoryboard_iPhone.storyboard` file. Select the main view controller, and on the Editor menu, select **Embed In**, **Navigation Controller**.
 
-![Embedding main view controller in a navigation controller](images/003-MainControllerIntoNavigationController.png)
+![Embedding main view controller in a navigation controller](media/mobile-services-ios-get-started-offline-data/main-controller-into-navigation.png)
 
 2. Select the table view cell in the Todo List View Controller. In the Attribute inspector, set the Accessory mode to be **Disclosure Indicator**.
 
-![Add disclosure indicator to table cell](images/004-TableCellAccessoryDisclosureIndicator.png)
+![Add disclosure indicator to table cell](media/mobile-services-ios-get-started-offline-data/disclosure-indicator.png)
 
 ### Adding the details view controller
 
@@ -101,7 +101,7 @@ This tutorial walks through the changes for the iPhone storyboard only, but you 
 
 7. Add a Text Field and Segmented Control to the view controller. Set the title for Segment 0 to "Yes" and the title for Segment 1 to "No".
 
-	![Item details view controller](images/005-ItemDetailViewController.png)
+	![Item details view controller](media/mobile-services-ios-get-started-offline-data/item-detail-view-controller.png)
 
 8. Link the new controls to the outlets in `QSTodoItemViewController`.
 
